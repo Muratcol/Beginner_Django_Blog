@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+<div class="container">
+  <div class="jumbotron">
+    <h3>Control Panel</h3>
+    <hr>
+    <p>Welcome {{request.user.username}}</p>
+    <a href="{% url 'article:addarticle'%}" class="btn btn-success">Add Article</a>
+    <br><br>
+    <h3>My Articles</h3>
+    <hr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Created Date</th>
+        </tr>
+      </thead>
+    {% if articles %}
+    {% for article in articles %}
+    <tbody>
+      <tr>
+        <th scope="row">{{article.id}}</th>
+        <td><a href="{% url 'article:article' article.id %}">{{article.title}}</a></td>
+        <td><a href="{% url 'article:dashboard'%}" title="it's me">{{article.author}}</a></td>
+        <td>{{article.created_date}}</td>
+        <td><a href="{% url 'article:update' article.id %}" class="btn btn-warning">Update</a></td>
+        <td><a href="{% url 'article:delete' article.id %}" class="btn btn-danger">Delete</a></td>
+      </tr>
+    {% endfor %}
+    {% else %}
+      <div type="alert" class="alert alert-warning">You don't have any article yet</div>
+    {% endif %}
+    
+    
+  </div>
+</div>
+  
+{% endblock body %}
